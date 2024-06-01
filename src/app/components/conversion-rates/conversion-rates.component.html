@@ -1,0 +1,102 @@
+<section>
+  <h2>Currency Converter</h2>
+  <div class="exchange">
+    <div class="exchange__content">
+      <div class="exchange__content__wrapper">
+        <h4>Amount</h4>
+        <h4>From</h4>
+        <div></div>
+        <h4>To</h4>
+        <!--        Amount input-->
+        <div class="exchange__content__wrapper__amount">
+          <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input
+              matInput
+              name="amount"
+              [(ngModel)]="amount"
+              (ngModelChange)="currencyValueChanged = true"
+              placeholder="1.00"
+              type="number"
+            />
+          </mat-form-field>
+        </div>
+        <!--        Base currency select-->
+        <div class="exchange__content__wrapper__base-currency">
+          <mat-form-field>
+            <mat-label>Currency From</mat-label>
+            <mat-select
+              (selectionChange)="onBaseCurrencyChange()"
+              [(value)]="baseCurrency"
+            >
+              @for (countryCode of CURRENCY_COUNTRY_CODES; track countryCode) {
+                <mat-option [value]="countryCode">{{ countryCode }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!--        Currency swap button-->
+        <div class="exchange__content__wrapper__currency-swap">
+          <button
+            aria-label="Example icon button with a delete icon"
+            color="primary"
+            mat-fab
+            (click)="onCurrencySwapClick()"
+          >
+            <mat-icon>swap_horiz</mat-icon>
+          </button>
+        </div>
+        <!--        Target currency select-->
+        <div class="exchange__content__wrapper__target-currency">
+          <mat-form-field>
+            <mat-label>Currency To</mat-label>
+            <mat-select
+              (selectionChange)="setTargetCurrency()"
+              [(value)]="targetCurrency"
+            >
+              @for (countryCode of CURRENCY_COUNTRY_CODES; track countryCode) {
+                <mat-option [value]="countryCode">{{ countryCode }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <button
+        class="exchange__content__wrapper__convert-button"
+        mat-flat-button
+        color="primary"
+        (click)="convertCurrencies()"
+      >
+        Convert
+      </button>
+    </div>
+    <!--    Displays the exchange result -->
+    <div class="exchange__result">
+      @if (!currencyValueChanged && (exchangeData$ | async); as data) {
+        <p class="exchange__result__amount">
+          {{ amount | currency : baseCurrency }} is
+          <strong>{{ data.conversionResult | currency : targetCurrency }}</strong>
+        </p>
+        <p class="exchange__result__text">
+          {{ 1 | currency : baseCurrency }} is
+          {{
+            data.conversionRate | currency : targetCurrency : 'symbol' : '1.2-4'
+          }}
+          <br />
+          {{ 1 | currency : targetCurrency }} is
+          {{
+            1 / data.conversionRate | currency : baseCurrency : 'symbol' : '1.2-4'
+          }}
+        </p>
+        <p class="exchange__result__text">
+          Where the hidden fee* is <strong>{{ HIDDEN_FEE_OTP_BANK }}</strong
+        >%
+        </p>
+        <small
+        >*The hidden fee amount used here is determined by OTP Bank in this
+          calculation</small
+        >
+      }
+    </div>
+  </div>
+</section>
