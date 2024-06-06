@@ -1,5 +1,6 @@
 import { CurrencyCountryCode } from '../types/country-codes.type';
 
+/** ISO 4217 Three Letter Currency Codes which are used by the API */
 export const CURRENCY_COUNTRY_CODES: CurrencyCountryCode[] = [
   'AED',
   'AFN',

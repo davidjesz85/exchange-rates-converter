@@ -51,7 +51,7 @@
           <mat-form-field>
             <mat-label>Currency To</mat-label>
             <mat-select
-              (selectionChange)="setTargetCurrency()"
+              (selectionChange)="onTargetCurrencyChange()"
               [(value)]="targetCurrency"
             >
               @for (countryCode of CURRENCY_COUNTRY_CODES; track countryCode) {

@@ -1,47 +1,18 @@
 import { CurrencyCountryCode } from '../types/country-codes.type';
 
-export type ResponseStatus = 'success' | 'error';
-
-export type ConversionRatesType = Record<CurrencyCountryCode, number>;
-
-export interface AllExchangeRates {
-  countryCode: CurrencyCountryCode;
-  exchangeRate: number;
-}
-
+/** ExchangeRate-API endpoint partial response */
 export interface ExchangeRateForCurrencyPairResponse {
   base_code: CurrencyCountryCode;
   conversion_rate: number;
   conversion_result: number;
-  result: ResponseStatus;
   target_code: CurrencyCountryCode;
 }
 
+/** Mapped interface to be aligned with widely used typescript interface conventions
+ * i.e.: camelCase for property names  */
 export interface ExchangeRateForCurrencyPair {
   baseCode: CurrencyCountryCode;
   conversionRate: number;
   conversionResult: number;
-  status: ResponseStatus;
   targetCode: CurrencyCountryCode;
-}
-
-export interface ExchangeRatesResponse {
-  conversion_rates: ConversionRatesType;
-  baseCode: CurrencyCountryCode;
-  result: ResponseStatus;
-}
-
-export interface ExchangeRates {
-  conversionRates: ConversionRatesType;
-  baseCode: CurrencyCountryCode;
-  result: ResponseStatus;
-}
-
-export interface ConversionRates {
-  conversion_rates: ConversionRatesType;
-}
-
-export interface CurrencyCountryCodeAndValue {
-  currency: CurrencyCountryCode;
-  amount: number;
 }

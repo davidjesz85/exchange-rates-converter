@@ -1,3 +1,4 @@
+/** ISO 4217 Three Letter Currency Codes */
 export type CurrencyCountryCode =
   | 'AED'
   | 'AFN'

@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { ExchangeRatesService } from '../../services/exchange-rates.service';
+import { ExchangeRatesService } from '../../services/exchange-rates/exchange-rates.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CurrencyCountryCode } from '../../types/country-codes.type';
 import { CURRENCY_COUNTRY_CODES } from '../../constants/CURRENCY_CODES';
@@ -93,20 +93,22 @@ export class ConversionRatesComponent {
       );
   }
 
-  setTargetCurrency() {
-    this.exchangeRatesService.targetCurrency.next(this.targetCurrency);
-  }
-
   onBaseCurrencyChange() {
+    this.currencyValueChanged = true;
     this.exchangeRatesService.baseCurrency.next(this.baseCurrency);
   }
 
   onCurrencySwapClick() {
     this.currencyValueChanged = true;
-    const temporaryTargetCurrencyCode = this.targetCurrency;
+    const temporaryTargetCurrencyCodeHolder = this.targetCurrency;
     this.targetCurrency = this.baseCurrency;
-    this.baseCurrency = temporaryTargetCurrencyCode;
+    this.baseCurrency = temporaryTargetCurrencyCodeHolder;
     this.fetchExchangeRates();
     this.currencyValueChanged = false;
+  }
+
+  onTargetCurrencyChange() {
+    this.currencyValueChanged = true;
+    this.exchangeRatesService.targetCurrency.next(this.targetCurrency);
   }
 }
